@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 interface FIRACSection {
+  key: string;
   title: string;
   content: string;
   placeholder: string;
@@ -18,30 +19,35 @@ const FIRACEditor: React.FC = () => {
 
   const firacSections: FIRACSection[] = [
     {
+      key: 'facts',
       title: 'F - Facts (Fatos)',
       content: sections.facts,
       placeholder: 'Descreva os fatos relevantes do caso...',
       description: 'Descreva os fatos objetivos e relevantes do caso legal.',
     },
     {
+      key: 'issue',
       title: 'I - Issue (Questão)',
       content: sections.issue,
       placeholder: 'Qual é a questão jurídica principal?',
       description: 'Identifique a questão legal principal que precisa ser resolvida.',
     },
     {
+      key: 'rule',
       title: 'R - Rule (Regra)',
       content: sections.rule,
       placeholder: 'Cite a lei, jurisprudência ou doutrina aplicável...',
       description: 'Cite a lei, jurisprudência ou princípios legais aplicáveis.',
     },
     {
+      key: 'application',
       title: 'A - Application (Aplicação)',
       content: sections.application,
       placeholder: 'Aplique a regra aos fatos do caso...',
       description: 'Aplique a regra legal aos fatos específicos do caso.',
     },
     {
+      key: 'conclusion',
       title: 'C - Conclusion (Conclusão)',
       content: sections.conclusion,
       placeholder: 'Qual é a conclusão baseada na análise?',
@@ -99,23 +105,23 @@ const FIRACEditor: React.FC = () => {
       </header>
 
       <main className="firac-content">
-        {firacSections.map((section, index) => (
-          <section key={index} className="firac-section">
+        {firacSections.map((section) => (
+          <section key={section.key} className="firac-section">
             <div className="section-header">
               <h2>{section.title}</h2>
               <p className="section-description">{section.description}</p>
             </div>
             <textarea
               className="section-textarea"
-              value={sections[Object.keys(sections)[index]]}
+              value={sections[section.key]}
               onChange={(e) =>
-                handleSectionChange(Object.keys(sections)[index], e.target.value)
+                handleSectionChange(section.key, e.target.value)
               }
               placeholder={section.placeholder}
               rows={6}
             />
             <div className="char-count">
-              {sections[Object.keys(sections)[index]].length} caracteres
+              {sections[section.key].length} caracteres
             </div>
           </section>
         ))}
